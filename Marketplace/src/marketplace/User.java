@@ -1,6 +1,6 @@
 package marketplace;
 
-public class User {
+public abstract class User {
 	
 	
 	// Variables de la classe User
