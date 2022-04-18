@@ -14,7 +14,6 @@ public abstract class User {
 	
 	// Constructeur de la classe User
 	public User(int id, String login, String password, String tel, String nom, String prenom) {
-		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;

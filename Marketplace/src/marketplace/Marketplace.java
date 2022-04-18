@@ -1,13 +1,16 @@
 package marketplace;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Marketplace {
 	
 
 	// Variables de la classe Marketplace
 	private ArrayList<Produit> listeProduits = new ArrayList<Produit>();
-	private ArrayList<User> listeUsers = new ArrayList<User>();
+	private Set<User> listeUsers= new HashSet<User>();
 	
 	
 	// Getters et Setters
@@ -15,7 +18,7 @@ public class Marketplace {
 		return listeProduits;
 	}
 	
-	public ArrayList<User> getListeUsers() {
+	public Set<User> getListeUsers() {
 		return listeUsers;
 	}	
 	
@@ -31,5 +34,11 @@ public class Marketplace {
 		return this.listeProduits.add(p);
 	}
 
+	public boolean addUser(User u) {
+		return this.listeUsers.add(u);
+	}
 	
+	public boolean removeUser(User u) {
+		return this.listeUsers.remove(u);
+	}
 }
