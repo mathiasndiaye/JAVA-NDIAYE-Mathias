@@ -13,8 +13,7 @@ public abstract class User {
 	
 	
 	// Constructeur de la classe User
-	public User(int id, String login, String password, String tel, String nom, String prenom) {
-		this.id = id;
+	public User(String login, String password, String tel, String nom, String prenom) {
 		this.login = login;
 		this.password = password;
 		this.tel = tel;
@@ -24,13 +23,6 @@ public abstract class User {
 	
 	
 	// Getters et setters
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getLogin() {
 		return login;
 	}
@@ -62,6 +54,13 @@ public abstract class User {
 		this.prenom = prenom;
 	}
 	
+	
+	//Méthodes de la classe User 
+	public String toString() {
+		String u;
+		u="[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + "]";
+		return u;
+	}
 	
 
 }

@@ -7,8 +7,8 @@ public class Client extends User {
 	private String adresse;
 	
 	//Constructeur de la classe Client
-	public Client(int id, String login, String password, String tel, String nom, String prenom, int numClient, String adresse){
-		super(id, login, password, tel, nom, prenom);
+	public Client(String login, String password, String tel, String nom, String prenom, int numClient, String adresse){
+		super(login, password, tel, nom, prenom);
 		this.numClient=numClient;
 		this.adresse=adresse;
 	}

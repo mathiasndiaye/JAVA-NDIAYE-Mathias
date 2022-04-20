@@ -3,7 +3,6 @@ package marketplace;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 
 public class Marketplace {
@@ -43,6 +42,9 @@ public class Marketplace {
 		return "Marketplace [listeProduits=" + listeProduits + ", listeUsers=" + listeUsers + "]";
 	}
 	
+	
+	//METHODES CONCERNANT LES PRODUITS ET LA GESTION DE LA LISTE DES PRODUITS
+	
 	//Ajoute un produit en vérifiant s'il n'est pas déjà contenu dans la liste
 	public boolean addProduit(Produit p) {
 		boolean ajoutOK;
@@ -70,6 +72,40 @@ public class Marketplace {
 		return this.addProduit(p);
 	}
 	
+	//Retire un produit de la liste ainsi que de l'indexation
+	public boolean removeProduit(Produit p) {
+		boolean supprimeOK;
+		supprimeOK=this.listeProduits.remove(p);
+		
+		if(supprimeOK) {
+			indexRefProduit.remove(p.getReference());
+		}
+		return supprimeOK;
+	}
+	
+	//Retire un produit en fonction de la clef d'indexation et de l'index
+		private <K> boolean removeProduit(K clef, Map<K,Produit> index) {
+			Produit produitASupprimer;
+			if (!index.containsKey(clef)) {
+				// Le CD n'est pas référencé
+				return false;
+			}
+			produitASupprimer = index.get(clef);
+			return removeProduit(produitASupprimer);
+		}
+		
+		//Retire un produit en fonction de sa reference
+		public boolean removeProduitReference(int ref) {
+			boolean produitASupprimer;
+			produitASupprimer=removeProduit(ref, indexRefProduit);
+			return produitASupprimer;
+		}
+	
+	
+		
+	////METHODES CONCERNANT LES USERS ET LA GESTION DE LA LISTE DES USERS
+		
+	
 	//Ajoute un user en vérifiant s'il n'est pas déjà contenu dans la liste
 	public boolean addUser(User u) {
 		boolean ajoutOK;
@@ -92,20 +128,43 @@ public class Marketplace {
 	}
 	
 	//Ajoute un client à la liste en fonction des paramètres 
-	public boolean addClient(int id, String login, String password, String tel, String nom, String prenom, int numClient, String adresse) {
-		Client c=new Client(id, login, password, tel, nom, prenom, numClient, adresse);
+	public boolean addClient(String login, String password, String tel, String nom, String prenom, int numClient, String adresse) {
+		Client c=new Client(login, password, tel, nom, prenom, numClient, adresse);
 		return this.addUser(c);
 	}
 	
 	//Ajoute un vendeur à la liste en fonction des paramètres 
-	public boolean addVendeur(int id, String login, String password, String tel, String nom, String prenom, int idVendeur) {
-		Vendeur v=new Vendeur(id, login, password, tel, nom, prenom, idVendeur);
+	public boolean addVendeur(String login, String password, String tel, String nom, String prenom, int idVendeur) {
+		Vendeur v=new Vendeur(login, password, tel, nom, prenom, idVendeur);
 		return this.addUser(v);
 	}
 	
+	//Retire un user de la liste ainsi que de l'indexation
 	public boolean removeUser(User u) {
-		return this.listeUsers.remove(u);
+		boolean supprimeOK;
+		supprimeOK=this.listeUsers.remove(u);
+		
+		if(supprimeOK) {
+			indexLoginUser.remove(u.getLogin());
+		}
+		return supprimeOK;
 	}
 	
-	//public boolean removeUserLogin()
+	//Retire un user en fonction de la clef d'indexation et de l'index
+	private <K> boolean removeUser(K clef, Map<K,User> index) {
+		User userASupprimer;
+		if (!index.containsKey(clef)) {
+			// Le CD n'est pas référencé
+			return false;
+		}
+		userASupprimer = index.get(clef);
+		return removeUser(userASupprimer);
+	}
+	
+	//Retire un user en fonction du login 
+	public boolean removeUserLogin(String login) {
+		boolean userASupprimer;
+		userASupprimer=removeUser(login, indexLoginUser);
+		return userASupprimer;
+	}
 }

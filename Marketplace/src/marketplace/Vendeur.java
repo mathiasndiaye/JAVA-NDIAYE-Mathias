@@ -7,8 +7,8 @@ public class Vendeur extends User {
 
 	
 	//Constructeur de la classe Vendeur
-	public Vendeur(int id, String login, String password, String tel, String nom, String prenom, int idVendeur) {
-		super(id, login, password, tel, nom, prenom);
+	public Vendeur(String login, String password, String tel, String nom, String prenom, int idVendeur) {
+		super(login, password, tel, nom, prenom);
 		this.idVendeur=idVendeur;
 	}
 	
@@ -20,7 +20,8 @@ public class Vendeur extends User {
 	public void setIdVendeur(int idVendeur) {
 		this.idVendeur = idVendeur;
 	}
-	
+
+	//Methodes de la classe vendeur
 	
 	
 }

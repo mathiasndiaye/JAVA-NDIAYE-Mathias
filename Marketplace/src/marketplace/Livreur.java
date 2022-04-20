@@ -5,8 +5,8 @@ public class Livreur extends User {
 	//Aucune nouvelle variable de plus que celles héritées de la classe User
 	
 	//Constructeur de la classe Livreur
-	public Livreur(int id, String login, String password, String tel, String nom, String prenom) {
-		super(id, login, password, tel, nom, prenom);
+	public Livreur(String login, String password, String tel, String nom, String prenom) {
+		super(login, password, tel, nom, prenom);
 		// TODO Auto-generated constructor stub
 	}
 	
