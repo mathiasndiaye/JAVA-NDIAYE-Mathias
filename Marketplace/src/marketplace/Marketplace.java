@@ -43,6 +43,7 @@ public class Marketplace {
 		return "Marketplace [listeProduits=" + listeProduits + ", listeUsers=" + listeUsers + "]";
 	}
 	
+	//Ajoute un produit en vérifiant s'il n'est pas déjà contenu dans la liste
 	public boolean addProduit(Produit p) {
 		boolean ajoutOK;
 		
@@ -63,6 +64,13 @@ public class Marketplace {
 		return ajoutOK;		
 	}
 	
+	//Ajoute un produit à la liste en fonction des paramètres 
+	public boolean addProduit(int ref, double prix, int delai_livraison) {
+		Produit p=new Produit(ref, prix, delai_livraison);
+		return this.addProduit(p);
+	}
+	
+	//Ajoute un user en vérifiant s'il n'est pas déjà contenu dans la liste
 	public boolean addUser(User u) {
 		boolean ajoutOK;
 		
@@ -81,6 +89,18 @@ public class Marketplace {
 		}
 		
 		return ajoutOK;
+	}
+	
+	//Ajoute un client à la liste en fonction des paramètres 
+	public boolean addClient(int id, String login, String password, String tel, String nom, String prenom, int numClient, String adresse) {
+		Client c=new Client(id, login, password, tel, nom, prenom, numClient, adresse);
+		return this.addUser(c);
+	}
+	
+	//Ajoute un vendeur à la liste en fonction des paramètres 
+	public boolean addVendeur(int id, String login, String password, String tel, String nom, String prenom, int idVendeur) {
+		Vendeur v=new Vendeur(id, login, password, tel, nom, prenom, idVendeur);
+		return this.addUser(v);
 	}
 	
 	public boolean removeUser(User u) {

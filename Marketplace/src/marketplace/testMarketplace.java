@@ -13,6 +13,7 @@ public class testMarketplace {
 		marketplace.addProduit(p2);
 		marketplace.addUser(c1);
 		marketplace.addUser(c2);
+		marketplace.addClient(3, "qwerty", "9101", "0662154960", "Cheikh", "NDIAYE", 3, "4 Rue BooskaP 15620 Lerap");
 		//marketplace.removeUser(c1);
 		System.out.println(marketplace.toString());
 	}
