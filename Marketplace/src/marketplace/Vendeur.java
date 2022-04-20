@@ -22,6 +22,8 @@ public class Vendeur extends User {
 	}
 
 	//Methodes de la classe vendeur
-	
-	
+	@Override
+	public String toString() {
+		return "[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + ", id vendeur : " + idVendeur + "]";
+	}
 }

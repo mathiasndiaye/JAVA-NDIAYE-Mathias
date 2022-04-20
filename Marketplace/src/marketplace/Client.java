@@ -32,6 +32,11 @@ public class Client extends User {
 	
 	
 	//Méthodes de la classe Client
+	@Override
+	public String toString() {
+		return "[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + ", numéro client : " + numClient + ", adresse : " + adresse +"]";
+	}
+	
 	void Acheter() {
 		//TODO
 	}
@@ -45,6 +50,5 @@ public class Client extends User {
 	void suivreCommande(Commande C) {
 		//TODO
 	}
-	
 
 }

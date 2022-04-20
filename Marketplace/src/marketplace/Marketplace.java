@@ -39,7 +39,16 @@ public class Marketplace {
 	// Méthodes de la classe Marketplace
 	@Override
 	public String toString() {
-		return "Marketplace [listeProduits=" + listeProduits + ", listeUsers=" + listeUsers + "]";
+		String s;
+		s="MarketPlace : Liste Produits : ";
+		for(Produit p:this.getListeProduits()) {
+			s=s+p.toString();
+		}
+		s=s+"; Liste Users";
+		for(User u:this.getListeUsers()) {
+			s=s+u.toString();
+		}
+		return s;
 	}
 	
 	
