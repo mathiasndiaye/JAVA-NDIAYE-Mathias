@@ -45,6 +45,7 @@ public class Marketplace {
 	
 	//METHODES CONCERNANT LES PRODUITS ET LA GESTION DE LA LISTE DES PRODUITS
 	
+	
 	//Ajoute un produit en vérifiant s'il n'est pas déjà contenu dans la liste
 	public boolean addProduit(Produit p) {
 		boolean ajoutOK;

@@ -37,5 +37,11 @@ public class Produit {
 	public void setDelai_livraison(int delai_livraison) {
 		this.delai_livraison = delai_livraison;
 	}
-	
+
+
+	//Méthodes de la classe Produit
+	@Override
+	public String toString() {
+		return "[reference=" + reference + ", prix=" + prix + ", delai_livraison=" + delai_livraison + "]";
+	}
 }
