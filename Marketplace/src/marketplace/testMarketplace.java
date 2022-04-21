@@ -18,6 +18,10 @@ public class testMarketplace {
 		marketplace.addClient("zar01", "7410", "066214520", "Mathieu", "Furon", 5, "19 Rue BooskaP 15620 Lerap");
 		//marketplace.removeUser(c1);
 		marketplace.removeUserLogin("zar01");
-		System.out.println(marketplace.toString());
-	}
+		//System.out.println(marketplace.toString());
+		c1.ajouterPanier(p1, 2);
+		c1.ajouterPanier(p2);
+		c1.viderPanier();
+		System.out.println("Panier :" + c1.getPanier().toString());
+		}
 }
