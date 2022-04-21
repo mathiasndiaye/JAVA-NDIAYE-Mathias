@@ -48,5 +48,12 @@ public class Contrat {
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
+	
+	
+	//Methodes de la classe contrat
+	@Override
+	public String toString() {
+		return "Contrat [num=" + num + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + "]";
+	}
 
 }

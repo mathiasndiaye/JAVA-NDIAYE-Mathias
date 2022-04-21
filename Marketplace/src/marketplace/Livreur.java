@@ -1,13 +1,17 @@
 package marketplace;
 
+import java.util.ArrayList;
+
 public class Livreur extends User {
 	
-	//Aucune nouvelle variable de plus que celles héritées de la classe User
+	//Variables classe Livreur
+	private ArrayList<Colis> listeColis;
+	
 	
 	//Constructeur de la classe Livreur
 	public Livreur(String login, String password, String tel, String nom, String prenom) {
 		super(login, password, tel, nom, prenom);
-		// TODO Auto-generated constructor stub
+		this.listeColis=new ArrayList<Colis>();
 	}
 	
 	//Méthodes de la classe Livreur
@@ -20,5 +24,13 @@ public class Livreur extends User {
 	public String notifier_client_colis(Colis c) {
 		return "Votre colis numéro " + c.getNomSuivi() + " est en route";
 	}*/
+	
+	void ajouterColis(Colis c) {
+		listeColis.add(c);
+	}
+	
+	void retirerColis(Colis c) {
+		listeColis.remove(c);
+	}
 
 }

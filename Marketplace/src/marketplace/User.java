@@ -4,7 +4,6 @@ public abstract class User {
 	
 	
 	// Variables de la classe User
-	private int id;
 	private String login;
 	private String password;
 	private String tel;

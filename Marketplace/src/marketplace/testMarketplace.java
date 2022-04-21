@@ -1,5 +1,7 @@
 package marketplace;
 
+import java.time.LocalDate;
+
 public class testMarketplace {
 
 	public static void main(String[] args) {
@@ -22,6 +24,9 @@ public class testMarketplace {
 		c1.ajouterPanier(p1, 2);
 		c1.ajouterPanier(p2);
 		c1.viderPanier();
-		System.out.println("Panier :" + c1.getPanier().toString());
+		//System.out.println("Panier :" + c1.getPanier().toString());
+		Vendeur v1 = new Vendeur("yoyo", "4201", "0652957430", "Jean", "Ti", 1);
+		v1.signerContrat(1, LocalDate.of(2022,04,21), LocalDate.of(2023,04,21));
+		System.out.println(v1.getContrat().toString());
 		}
 }
