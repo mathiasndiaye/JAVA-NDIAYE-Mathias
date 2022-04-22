@@ -14,7 +14,7 @@ public class Marketplace {
 	
 	//Indexation des User
 	private Map<String,User> indexLoginUser;     //Permet de mapper un login avec son User
-	private Map<Integer,Produit> indexRefProduit;   //Permet de mapper une ref produit avec son produit
+	private Map<String, Produit> indexRefProduit;   //Permet de mapper une ref produit avec son produit
 	
 	
 	//Constructeur de la classe Marketplace
@@ -22,7 +22,7 @@ public class Marketplace {
 		listeProduits=new ArrayList<Produit>();
 		listeUsers=new ArrayList<User>();
 		indexLoginUser= new HashMap<String,User>();
-		indexRefProduit=new HashMap<Integer,Produit>();
+		indexRefProduit=new HashMap<String,Produit>();
 	}
 	
 	
@@ -77,7 +77,7 @@ public class Marketplace {
 	}
 	
 	//Ajoute un produit à la liste en fonction des paramètres 
-	public boolean addProduit(int ref, double prix, int delai_livraison) {
+	public boolean addProduit(String ref, double prix, int delai_livraison) {
 		Produit p=new Produit(ref, prix, delai_livraison);
 		return this.addProduit(p);
 	}
@@ -105,7 +105,7 @@ public class Marketplace {
 		}
 		
 		//Retire un produit en fonction de sa reference
-		public boolean removeProduitReference(int ref) {
+		public boolean removeProduitReference(String ref) {
 			boolean produitASupprimer;
 			produitASupprimer=removeProduit(ref, indexRefProduit);
 			return produitASupprimer;

@@ -4,13 +4,13 @@ public class Produit {
 	
 	
 	// Variables de la classe Produit
-	private int reference;
+	private String reference;
 	private double prix;
 	private int delai_livraison;   //délai en jours
 	
 	
 	// Constructeur de la classe Produit
-	public Produit(int reference, double prix, int delai_livraison) {
+	public Produit(String reference, double prix, int delai_livraison) {
 		super();
 		this.reference = reference;
 		this.prix = prix;
@@ -19,10 +19,10 @@ public class Produit {
 	
 	
 	// Getters et setters
-	public int getReference() {
+	public String getReference() {
 		return reference;
 	}
-	public void setReference(int reference) {
+	public void setReference(String reference) {
 		this.reference = reference;
 	}
 	public double getPrix() {

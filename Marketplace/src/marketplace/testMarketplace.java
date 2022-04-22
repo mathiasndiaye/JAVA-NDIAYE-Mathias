@@ -7,8 +7,8 @@ public class testMarketplace {
 	public static void main(String[] args) {
 		
 		Marketplace marketplace=new Marketplace();
-		Produit p1=new Produit(1,14.5,7);
-		Produit p2=new Produit(1, 29.99, 3);
+		Produit p1=new Produit("Assiette",14.5,7);
+		Produit p2=new Produit("Casserole", 29.99, 3);
 		Client c1=new Client("azerty", "1234", "0783453104", "Mathias", "NDIAYE", 1, "3 avenue de Pompadour 19350 Juillac");
 		Client c2=new Client("qwerty", "5678", "0782484331", "Yoan", "NDIAYE", 2, "13 Rue du lavoir 243567 Lolo");
 		marketplace.addProduit(p1);
@@ -27,6 +27,8 @@ public class testMarketplace {
 		//System.out.println("Panier :" + c1.getPanier().toString());
 		Vendeur v1 = new Vendeur("yoyo", "4201", "0652957430", "Jean", "Ti", 1);
 		v1.signerContrat(1, LocalDate.of(2022,04,21), LocalDate.of(2023,04,21));
-		System.out.println(v1.getContrat().toString());
+		v1.addProduit("Fourchette", 1.0, 4);
+		v1.addProduit("Couteau", 2.0, 4);
+		System.out.println(v1.toString());
 		}
 }
