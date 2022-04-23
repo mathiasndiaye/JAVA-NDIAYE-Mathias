@@ -1,6 +1,7 @@
 package marketplace;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class testMarketplace {
 
@@ -30,5 +31,56 @@ public class testMarketplace {
 		v1.addProduit("Fourchette", 1.0, 4);
 		v1.addProduit("Couteau", 2.0, 4);
 		System.out.println(v1.toString());
+		
+	
+		
 		}
+	
+	/**
+	 * lire une information au clavier avec un message d'attente
+	 * @param messageInfo le message d'attente (prompt)
+	 * @return chaîne lu au clavier
+	 */
+    private static String lireInfo(String messageInfo) {
+		String infoLue;
+		System.out.print(messageInfo + " : ");
+		// lecture clavier et nettoyage des espaces en tête ou en queue de
+		// chaîne
+		 Scanner s = new Scanner(System.in);
+		 infoLue = s.nextLine();
+		return infoLue;
+	}
+    
+    //Lis entree utilisateur pour prix
+    private static double saisiePrix(){
+		String chainePrix;
+		double prix = -1;
+		boolean erreur;
+		do {
+			try {
+				erreur = false;
+				chainePrix= lireInfo("Prix ");
+				prix = Integer.parseInt(chainePrix);
+			} catch (NumberFormatException e) {
+				erreur = true;
+			}
+		} while (erreur || (prix < 0));
+		return prix;
+	}
+    
+	
+	//Ajouter un produit a la liste des produits marketplace
+	private static void addProduit(Marketplace m) {
+		String reference;
+		double prix;
+		int delai_livraison;
+		
+		//On lit les entrées de l'utilisateur
+		reference=lireInfo("Reference ");
+		prix=saisiePrix();
+				
+	}
+	
+	
+	
 }
