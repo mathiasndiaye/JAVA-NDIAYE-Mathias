@@ -1,5 +1,7 @@
 package marketplace;
 
+import java.util.Map;
+
 public abstract class User {
 	
 	
@@ -53,6 +55,10 @@ public abstract class User {
 		this.prenom = prenom;
 	}
 	
+	public Map<String, Produit> getIndexRefProduit() {
+		return null;
+	}
+	
 	
 	//Méthodes de la classe User 
 	public String toString() {
@@ -61,5 +67,19 @@ public abstract class User {
 		return u;
 	}
 	
+	public void afficherProduits() {
+		//Nothing here, we override it in vendeur class
+	}
+	
+	public boolean addProduit(String reference, double prix, int delai_livraison) {
+		return false; //We redefenite it in vendeur class
+	}
+	
+	public void ajouterPanier(Produit p) {
+		//Nothing here, we override it in vendeur class
+	}
 
+	public void viderPanier() {
+		//Nothing here, we override it in vendeur class
+	}
 }

@@ -1,6 +1,8 @@
 package marketplace;
 
 import java.time.LocalDate;
+import java.io.IOError;
+import java.lang.Object;
 import java.util.Scanner;
 
 public class testMarketplace {
@@ -8,7 +10,7 @@ public class testMarketplace {
 	public static void main(String[] args) {
 		
 		Marketplace marketplace=new Marketplace();
-		Produit p1=new Produit("Assiette",14.5,7);
+		/*Produit p1=new Produit("Assiette",14.5,7);
 		Produit p2=new Produit("Casserole", 29.99, 3);
 		Client c1=new Client("azerty", "1234", "0783453104", "Mathias", "NDIAYE", 1, "3 avenue de Pompadour 19350 Juillac");
 		Client c2=new Client("qwerty", "5678", "0782484331", "Yoan", "NDIAYE", 2, "13 Rue du lavoir 243567 Lolo");
@@ -30,11 +32,41 @@ public class testMarketplace {
 		v1.signerContrat(1, LocalDate.of(2022,04,21), LocalDate.of(2023,04,21));
 		v1.addProduit("Fourchette", 1.0, 4);
 		v1.addProduit("Couteau", 2.0, 4);
-		System.out.println(v1.toString());
+		//System.out.println(v1.toString());
+		*/
+		//addProduit(marketplace);
+		//System.out.println(marketplace.toString());
+		
+		//Test ajout produit ‡ un vendeur
+		
+		/*Vendeur v1 = new Vendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
+		addProduit(v1);
+		addProduit(v1);
+		System.out.println(v1.toString());*/
+		
+		/*
+		//Test inscription client 
+		inscrireClient(marketplace);
+		inscrireVendeur(marketplace);
+		System.out.println(marketplace.toString());
+		 */
+		
+		//Test ajout produit et ajout panier
+		/*marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
+		addProduit(marketplace);
+		addProduit(marketplace);
+		addProduit(marketplace.getListeUsers().get(0));
+		marketplace.addClient("yaya", "0521", "056321495", "Loic","Sims", "3 avenue des lilas");
+		afficherProduits(marketplace);
+		ajouterPanier(marketplace, marketplace.getListeUsers().get(1));*/
+		
+		//Affichage premier menu connexion ou inscription
+		menuConnexionInscription(marketplace);
+	}
+				
 		
 	
-		
-		}
+	//METHODES IMPORTANTES
 	
 	/**
 	 * lire une information au clavier avec un message d'attente
@@ -50,6 +82,10 @@ public class testMarketplace {
 		 infoLue = s.nextLine();
 		return infoLue;
 	}
+	
+	
+	//GESTION DES PRODUITS DES VENDEURS ET DU MARKETPLACE
+	
     
     //Lis entree utilisateur pour prix
     private static double saisiePrix(){
@@ -60,12 +96,29 @@ public class testMarketplace {
 			try {
 				erreur = false;
 				chainePrix= lireInfo("Prix ");
-				prix = Integer.parseInt(chainePrix);
+				prix = Double.parseDouble(chainePrix);
 			} catch (NumberFormatException e) {
 				erreur = true;
 			}
 		} while (erreur || (prix < 0));
 		return prix;
+	}
+    
+    //Lis entree utilisateur pour dÈlai de livraison
+    private static int saisieDelai(){
+		String chaineDelai;
+		int delai = -1;
+		boolean erreur;
+		do {
+			try {
+				erreur = false;
+				chaineDelai= lireInfo("DÈlai de livraison ");
+				delai = Integer.parseInt(chaineDelai);
+			} catch (NumberFormatException e) {
+				erreur = true;
+			}
+		} while (erreur || (delai < 0));
+		return delai;
 	}
     
 	
@@ -74,13 +127,248 @@ public class testMarketplace {
 		String reference;
 		double prix;
 		int delai_livraison;
+		boolean produitAjoute;
 		
 		//On lit les entrÈes de l'utilisateur
 		reference=lireInfo("Reference ");
 		prix=saisiePrix();
+		delai_livraison=saisieDelai();
+		
+		//On cree le produit et l'ajoute ‡ la liste des produits
+		produitAjoute=m.addProduit(reference, prix, delai_livraison);
+		
+		if(produitAjoute) {
+			System.out.println("Produit ajoutÈ ‡ la liste des produits du Marketplace");
+		}
+		else {
+			System.out.println("Ce produit existe dÈj‡");
+		}
+	}
+	
+	//Ajoute un produit a la liste des produits d'un vendeur 
+	private static void addProduit(User u) {
+		String reference;
+		double prix;
+		int delai_livraison;
+		boolean produitAjoute=false;
+		
+		//On lit les entrÈes de l'utilisateur
+		reference=lireInfo("Reference ");
+		prix=saisiePrix();
+		delai_livraison=saisieDelai();
+		
+		//On cree le produit et l'ajoute ‡ la liste des produits
+		if(u.getClass().getSimpleName().equals("Vendeur")) {
+			produitAjoute=u.addProduit(reference, prix, delai_livraison);
+		}
+		
+		if(produitAjoute==true) {
+			System.out.println("Produit ajoutÈ ‡ votre liste des produits");
+		}
+		else {
+			System.out.println("Ce produit existe dÈj‡");
+		}
+	}
+	
+	//Affiche les liste de tous les produits prÈsent sur le marketplace
+	private static void afficherProduits(Marketplace m) {
+		m.afficherProduits();
+		System.out.println("");
+		for(int i=0; i<m.getListeUsers().size(); i++) {
+			if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur")) {
+				System.out.println("");
+				m.getListeUsers().get(i).afficherProduits();
+			}
+		}
+	}
+	
+	
+	//GESTION DES UTILISATEURS
+ 
+    
+	//Methode pour inscrire un client 
+	private static void inscrireClient(Marketplace m) {
+		String login;
+		String password;
+		String tel;
+		String nom;
+		String prenom;
+		String adresse;
+		boolean clientAjoute;
+		
+		login=lireInfo("Login ");
+		password=lireInfo("Password ");
+		tel=lireInfo("Telephon number ");
+		nom=lireInfo("Nom ");
+		prenom=lireInfo("Prenom ");
+		adresse=lireInfo("Adresse ");
+		
+		//On cree le produit et l'ajoute ‡ la liste des produits
+		clientAjoute=m.addClient(login, password, tel, nom, prenom, adresse);
 				
+		if(clientAjoute) {
+			System.out.println("Inscription rÈussie");
+		}
+		else {
+			System.out.println("Vous possedez dÈj‡ un compte. Veuillez vous connecter");
+		}
+	}
+	
+	
+	//Methode pour inscrire un vendeur
+	private static void inscrireVendeur(Marketplace m) {
+		String login;
+		String password;
+		String tel;
+		String nom;
+		String prenom;
+		boolean vendeurAjoute;
+		
+		login=lireInfo("Login ");
+		password=lireInfo("Password ");
+		tel=lireInfo("Telephon number ");
+		nom=lireInfo("Nom ");
+		prenom=lireInfo("Prenom ");
+		
+		//On cree le produit et l'ajoute ‡ la liste des produits
+		vendeurAjoute=m.addVendeur(login, password, tel, nom, prenom);
+				
+		if(vendeurAjoute) {
+			System.out.println("Inscription rÈussie");
+		}
+		else {
+			System.out.println("Vous possedez dÈj‡ un compte. Veuillez vous connecter");
+		}
 	}
 	
 	
 	
-}
+	//METHODE GESTION PANIER CLIENT
+	
+	//Ajoute un article au panier selon la ref saisie par le client. Attention, on considËre que la reference d'un produit constitue la clÈ primaire de notre table produit. Par consequent on imagine que 2 artciles n'auront jamais la meme ref. Si cela venait ‡ arriver, cette mÈthode ajoute uniquement le premier article au panier. 
+	private static void ajouterPanier(Marketplace m, User u) {
+		String refProduit;
+		
+		refProduit=lireInfo("Veuillez inscrire la rÈfÈrence du produit que vous voulez achetez ");
+		
+		//Verifie si le produit avec cette ref est vendu par le marketplace
+		if(m.getIndexRefProduit().containsKey(refProduit)) {
+			u.ajouterPanier(m.getIndexRefProduit().get(refProduit));
+			System.out.println("Article ajoutÈ au panier avec succËs.");
+			return; //Pour arreter la mÈthode
+		}
+		
+		//Verifie si le produit avec cette ref est vendu par un des vendeurs
+		for(int i=0; i<m.getListeUsers().size(); i++) {
+				if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur")){
+					if(m.getListeUsers().get(i).getIndexRefProduit().containsKey(refProduit)) {
+						u.ajouterPanier(m.getListeUsers().get(i).getIndexRefProduit().get(refProduit));
+						System.out.println("Article ajoutÈ au panier avec succËs.");
+						return; //pour arreter la mÈthode
+					}
+				}
+			
+		}
+		
+		//Si le produit n'a pas ÈtÈ trouvÈ
+		System.out.println("DÈsolÈ ce produit n'existe pas. Veuillez rÈessayer.");
+		
+	}
+	
+	//Vider le Panier d'un client
+	private static void viderPanier(User u) {
+		u.viderPanier();
+	}
+	
+	
+	
+	
+	//AFFICHAGE DES MENUS
+	//Gere saisie menu 
+	private static int saisieChoix(int borneMin, int borneMax) {
+		int choix = -1;
+		boolean erreur;
+		String lecture; // buffer de lecture clavier
+
+		// lecture du choix jusqu'√† ce qu'elle soit correcte
+		do {
+			try {
+				erreur = false;
+				lecture = lireInfo("Votre choix");
+				choix = Integer.parseInt(lecture);
+			} catch (NumberFormatException e) {
+				// ce n'est pas un entier qui a √©t√© lu au clavier
+				erreur = true;
+			}
+		} while (erreur || choix<borneMin || choix>borneMax);
+		return choix;
+	}
+	
+	private static void afficherMenuAuthentification() {
+		System.out.println("Menu :");
+		System.out.println("");
+		System.out.println("(1) CrÈer un compte");
+		System.out.println("(2) Se connecter");
+		System.out.println("");
+	}
+	
+	private static void afficherMenuInscription() {
+		System.out.println("Inscription en tant que : ");
+		System.out.println("");
+		System.out.println("(1) Client");
+		System.out.println("(2) Vendeur");
+		System.out.println("");
+	}
+	
+	//Affichage du menu d'inscription ou de connexion
+	private static void menuConnexionInscription(Marketplace marketplace) {
+		int choix=-1;
+	    
+		try {
+		while (choix!=0) {
+			afficherMenuAuthentification();
+			choix = saisieChoix(0,2);	
+			System.out.println("\n--------------------------------------------");
+			switch (choix){
+				case 1 :   
+					choixInscription(marketplace);
+					break;
+				case 2 :   
+					//methode connexion
+					break;
+				
+				case 0 :   System.out.println("Bye Bye");
+					break;
+			}
+		}
+		} catch (IOError e) {
+			System.err.println("Erreur grave d'entr√©e/sortie, fin de l'application");
+		}
+
+	}
+	
+	private static void choixInscription(Marketplace marketplace) {
+		int choix2=-1;
+		try {
+			while (choix2!=0) {
+				afficherMenuInscription();
+				choix2 = saisieChoix(0,2);	
+				System.out.println("\n--------------------------------------------");
+				switch (choix2){
+					case 1 :   
+						inscrireClient(marketplace);
+						break;
+					case 2 :   
+						inscrireVendeur(marketplace);
+						break;
+					
+					case 0 :   System.out.println("Bye Bye");
+						break;
+				}
+			}
+			} catch (IOError e) {
+				System.err.println("Erreur grave d'entr√©e/sortie, fin de l'application");
+			}
+		}
+
+	}

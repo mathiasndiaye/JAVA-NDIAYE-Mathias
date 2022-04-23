@@ -8,7 +8,6 @@ import java.util.Map;
 public class Vendeur extends User {
 	
 	//Variables de la classe Vendeur
-	private int idVendeur;
 	private Contrat contrat;
 	private ArrayList<Produit> listeProduits=new ArrayList<Produit>();
 		
@@ -16,20 +15,11 @@ public class Vendeur extends User {
 	private Map<String,Produit> indexRefProduit=new HashMap<String,Produit>();   //Permet de mapper une ref produit avec son produit
 	
 	//Constructeur de la classe Vendeur
-	public Vendeur(String login, String password, String tel, String nom, String prenom, int idVendeur) {
+	public Vendeur(String login, String password, String tel, String nom, String prenom) {
 		super(login, password, tel, nom, prenom);
-		this.idVendeur=idVendeur;
 	}
 	
 	//Getters et Setters de la classe vendeur
-	public int getIdVendeur() {
-		return idVendeur;
-	}
-	
-	public void setIdVendeur(int idVendeur) {
-		this.idVendeur = idVendeur;
-	}
-
 	public Contrat getContrat() {
 		return contrat;
 	}
@@ -42,6 +32,7 @@ public class Vendeur extends User {
 		return listeProduits;
 	}
 
+	@Override
 	public Map<String, Produit> getIndexRefProduit() {
 		return indexRefProduit;
 	}
@@ -49,7 +40,7 @@ public class Vendeur extends User {
 	//Methodes de la classe vendeur
 	@Override
 	public String toString() {
-		return "Vendeur [idVendeur=" + idVendeur + ", contrat=" + contrat + ", listeProduits=" + listeProduits
+		return "Vendeur [contrat=" + contrat + ", listeProduits=" + listeProduits
 				+ ", indexRefProduit=" + indexRefProduit + "]";
 	}
 
@@ -84,6 +75,7 @@ public class Vendeur extends User {
 	}
 	
 	//Ajoute un produit à la liste en fonction des paramètres 
+	@Override
 	public boolean addProduit(String ref, double prix, int delai_livraison) {
 		Produit p=new Produit(ref, prix, delai_livraison);
 		return this.addProduit(p);
@@ -117,4 +109,14 @@ public class Vendeur extends User {
 		produitASupprimer=removeProduit(ref, indexRefProduit);
 		return produitASupprimer;
 		}
+	
+	//Affiche tous les produits vendus par le vendeur
+	@Override
+	public void afficherProduits() {
+		System.out.println("Liste des produits vendues par " + this.getLogin() + " : ");
+		System.out.println("");
+		for(int i=0; i<listeProduits.size(); i++) {
+			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours");
+		}
+	}
 }

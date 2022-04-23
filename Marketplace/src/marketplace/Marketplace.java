@@ -35,6 +35,10 @@ public class Marketplace {
 		return listeUsers;
 	}	
 	
+	public Map<String, Produit> getIndexRefProduit(){
+		return indexRefProduit;
+	}
+	
 	
 	// Méthodes de la classe Marketplace
 	@Override
@@ -44,11 +48,20 @@ public class Marketplace {
 		for(Produit p:this.getListeProduits()) {
 			s=s+p.toString();
 		}
-		s=s+"; Liste Users";
+		s=s+"; Liste Users : ";
 		for(User u:this.getListeUsers()) {
 			s=s+u.toString();
 		}
 		return s;
+	}
+	
+	//Affiche tous les produits vendus par le Marketplace
+	public void afficherProduits() {
+		System.out.println("Liste des produits vendues par le Marketplace : ");
+		System.out.println("");
+		for(int i=0; i<listeProduits.size(); i++) {
+			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours");
+		}
 	}
 	
 	
@@ -138,14 +151,14 @@ public class Marketplace {
 	}
 	
 	//Ajoute un client à la liste en fonction des paramètres 
-	public boolean addClient(String login, String password, String tel, String nom, String prenom, int numClient, String adresse) {
-		Client c=new Client(login, password, tel, nom, prenom, numClient, adresse);
+	public boolean addClient(String login, String password, String tel, String nom, String prenom, String adresse) {
+		Client c=new Client(login, password, tel, nom, prenom, adresse);
 		return this.addUser(c);
 	}
 	
 	//Ajoute un vendeur à la liste en fonction des paramètres 
-	public boolean addVendeur(String login, String password, String tel, String nom, String prenom, int idVendeur) {
-		Vendeur v=new Vendeur(login, password, tel, nom, prenom, idVendeur);
+	public boolean addVendeur(String login, String password, String tel, String nom, String prenom) {
+		Vendeur v=new Vendeur(login, password, tel, nom, prenom);
 		return this.addUser(v);
 	}
 	

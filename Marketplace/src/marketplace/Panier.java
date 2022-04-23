@@ -10,7 +10,7 @@ public class Panier {
 	private ArrayList<Produit> listeProduits;
 	
 	//Indexation des produits
-	private Map<Integer,Produit> indexRefProduit;     //Permet de mapper un produit avec sa ref   			//A VOIR SI ON FAIT CA, PAS SUR
+	private Map<String,Produit> indexRefProduit;     //Permet de mapper un produit avec sa ref   			//A VOIR SI ON FAIT CA, PAS SUR
 
 	
 	//Constructeur de la classe Panier
@@ -30,6 +30,10 @@ public class Panier {
 
 	public void setMontant(double montant) {
 		this.montant = montant;
+	}
+	
+	public Map<String,Produit> getIndexRefProduit(){
+		return indexRefProduit;
 	}
 	
 	//Méthodes de la classe panier
