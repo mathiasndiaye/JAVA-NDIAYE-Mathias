@@ -7,6 +7,7 @@ public class Client extends User {
 	// Variables de la classe Client
 	private String adresse;
 	private Panier panier;
+	//private double solde;
 	
 	//Constructeur de la classe Client
 	public Client(String login, String password, String tel, String nom, String prenom, String adresse){

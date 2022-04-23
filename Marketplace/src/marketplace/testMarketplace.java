@@ -61,7 +61,13 @@ public class testMarketplace {
 		ajouterPanier(marketplace, marketplace.getListeUsers().get(1));*/
 		
 		//Affichage premier menu connexion ou inscription
-		menuConnexionInscription(marketplace);
+		//menuConnexionInscription(marketplace);
+		marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
+		addProduit(marketplace);
+		addProduit(marketplace);
+		addProduit(marketplace.getListeUsers().get(0));
+		marketplace.addClient("yaya", "0521", "056321495", "Loic","Sims", "3 avenue des lilas");
+		menuClient(marketplace,marketplace.getListeUsers().get(1));
 	}
 				
 		
@@ -180,6 +186,7 @@ public class testMarketplace {
 				m.getListeUsers().get(i).afficherProduits();
 			}
 		}
+		System.out.println("");
 	}
 	
 	
@@ -347,6 +354,7 @@ public class testMarketplace {
 
 	}
 	
+	//Affichage menu inscription client ou vendeur
 	private static void choixInscription(Marketplace marketplace) {
 		int choix2=-1;
 		try {
@@ -362,7 +370,8 @@ public class testMarketplace {
 						inscrireVendeur(marketplace);
 						break;
 					
-					case 0 :   System.out.println("Bye Bye");
+					case 0 :   
+						System.out.println("Bye Bye");
 						break;
 				}
 			}
@@ -370,5 +379,51 @@ public class testMarketplace {
 				System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");
 			}
 		}
+	
+	private static void menuClient(Marketplace m, User u) {
+		int choix=-1; 
+	    
+		try {
+		while (choix!=0) {
+			afficherMenuClient();  //A FAIRE : Afficher solde du client 
+			choix = saisieChoix(0,3);	
+			System.out.println("\n--------------------------------------------");
+			switch (choix){
+				case 1 : 
+					afficherProduits(m);
+					ajouterPanier(m,u);  
+					break;
+				case 2 :   
+					viderPanier(u);
+					System.out.println("");
+					System.out.println("Panier vidé avec succès");
+					break;
+				
+				case 3 :   
+					//acheter(clt);
+					break;
+					
+				//case 4 :
+					//afficherPanier();
+					//break;
+					
+				case 0 :   System.out.println("Bye Bye");
+					break;
+			}
+		}
+		} catch (IOError e) {
+			System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");
+		}
+	}
+	
+	private static void afficherMenuClient() {
+		System.out.println("");
+		System.out.println("Menu :");
+		System.out.println("(1) Ajouter au panier");
+		System.out.println("(2) Vider le panier");
+		System.out.println("(3) Acheter");
+		System.out.println("");
+		
+}
 
 	}
