@@ -104,19 +104,29 @@ public class Vendeur extends User {
 		}
 		
 	//Retire un produit en fonction de sa reference
+	@Override
 	public boolean removeProduitReference(String ref) {
 		boolean produitASupprimer;
-		produitASupprimer=removeProduit(ref, indexRefProduit);
+		produitASupprimer=removeProduit(indexRefProduit.get(ref));
+		removeProduit(ref, indexRefProduit);
 		return produitASupprimer;
 		}
 	
 	//Affiche tous les produits vendus par le vendeur
 	@Override
 	public void afficherProduits() {
+		if(listeProduits.size()==0) {
+			System.out.println("Liste des produits vendues par " + this.getLogin() + " : ");
+			System.out.println("");
+			System.out.println("Aucun produit à la vente.");
+		}
+		
+		else {
 		System.out.println("Liste des produits vendues par " + this.getLogin() + " : ");
 		System.out.println("");
 		for(int i=0; i<listeProduits.size(); i++) {
 			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours");
+		}
 		}
 	}
 }

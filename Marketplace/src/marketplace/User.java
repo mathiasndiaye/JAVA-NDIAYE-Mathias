@@ -71,6 +71,10 @@ public abstract class User {
 		//Nothing here, we override it in vendeur class
 	}
 	
+	public boolean removeProduitReference(String ref) {
+		return false;     //We override it in vendeur class
+		}
+	
 	public boolean addProduit(String reference, double prix, int delai_livraison) {
 		return false; //We redefenite it in vendeur class
 	}
@@ -82,4 +86,5 @@ public abstract class User {
 	public void viderPanier() {
 		//Nothing here, we override it in vendeur class
 	}
+	
 }

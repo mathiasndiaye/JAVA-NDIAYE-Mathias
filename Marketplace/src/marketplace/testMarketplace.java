@@ -60,14 +60,21 @@ public class testMarketplace {
 		afficherProduits(marketplace);
 		ajouterPanier(marketplace, marketplace.getListeUsers().get(1));*/
 		
-		//Affichage premier menu connexion ou inscription
+		//Test premier menu connexion ou inscription
 		//menuConnexionInscription(marketplace);
+		
+		/*Test menu client
 		marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
 		addProduit(marketplace);
 		addProduit(marketplace);
 		addProduit(marketplace.getListeUsers().get(0));
 		marketplace.addClient("yaya", "0521", "056321495", "Loic","Sims", "3 avenue des lilas");
 		menuClient(marketplace,marketplace.getListeUsers().get(1));
+		*/
+		
+		//Test menu vendeur
+		marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
+		menuVendeur(marketplace, marketplace.getListeUsers().get(0));
 	}
 				
 		
@@ -176,6 +183,27 @@ public class testMarketplace {
 		}
 	}
 	
+	//Retire un produit a la liste des produits d'un vendeur 
+		private static void removeProduit(User u) {
+			String reference;
+			boolean produitRetire=false;
+			
+			//On lit les entrées de l'utilisateur
+			reference=lireInfo("Reference ");
+			
+			//On cree le produit et l'ajoute à la liste des produits
+			if(u.getClass().getSimpleName().equals("Vendeur")) {
+				produitRetire=u.removeProduitReference(reference);
+			}
+			
+			if(produitRetire==true) {
+				System.out.println("Produit retiré de votre liste des produits");
+			}
+			else {
+				System.out.println("Ce produit existe déjà");
+			}
+		}
+	
 	//Affiche les liste de tous les produits présent sur le marketplace
 	private static void afficherProduits(Marketplace m) {
 		m.afficherProduits();
@@ -183,6 +211,17 @@ public class testMarketplace {
 		for(int i=0; i<m.getListeUsers().size(); i++) {
 			if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur")) {
 				System.out.println("");
+				m.getListeUsers().get(i).afficherProduits();
+			}
+		}
+		System.out.println("");
+	}
+	
+	//Affiche la liste de tous les produits vendu par un vendeur
+	private static void afficherProduits(Marketplace m, User u) {
+		System.out.println("");
+		for(int i=0; i<m.getListeUsers().size(); i++) {
+			if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur") && m.getListeUsers().get(i).getLogin().equals(u.getLogin())) {
 				m.getListeUsers().get(i).afficherProduits();
 			}
 		}
@@ -416,12 +455,53 @@ public class testMarketplace {
 		}
 	}
 	
+	private static void menuVendeur(Marketplace m, User u) {
+		int choix=-1; 
+	    
+		try {
+		while (choix!=0) {
+			afficherMenuVendeur();
+			choix = saisieChoix(0,3);	
+			System.out.println("\n--------------------------------------------");
+			switch (choix){
+				case 1 : 
+					addProduit(u);  
+					break;
+				
+				case 2 :   
+					afficherProduits(m,u);
+					removeProduit(u);
+					break;
+				
+				case 3 :
+					afficherProduits(m,u);
+					break;
+				
+				case 0 :   System.out.println("Bye Bye");
+					break;
+			}
+		}
+		} catch (IOError e) {
+			System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");
+		}
+	}
+	
 	private static void afficherMenuClient() {
 		System.out.println("");
 		System.out.println("Menu :");
 		System.out.println("(1) Ajouter au panier");
 		System.out.println("(2) Vider le panier");
 		System.out.println("(3) Acheter");
+		System.out.println("");
+		
+}
+	
+	private static void afficherMenuVendeur() {
+		System.out.println("");
+		System.out.println("Menu :");
+		System.out.println("(1) Ajouter un produit");
+		System.out.println("(2) Retirer un produit");
+		System.out.println("(3) Afficher ma liste de produits à la vente");
 		System.out.println("");
 		
 }
