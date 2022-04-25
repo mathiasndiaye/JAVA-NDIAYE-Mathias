@@ -241,8 +241,8 @@ public class testMarketplace {
 	//GESTION DES UTILISATEURS
  
     //Methode pour se connecter
-	private static void seConnecter(Marketplace m) {
-		String login;
+	private static User seConnecter(Marketplace m) {
+		String login=null;
 		String password;
 		boolean clientConnecte=false;
 		
@@ -258,7 +258,7 @@ public class testMarketplace {
 				System.out.println("");
 				clientConnecte=true;
 			}
-			else {
+	    else {
 			System.out.println("");
 			System.out.println("Mot de passe erroné. Recommencez.");
 			System.out.println("");
@@ -270,6 +270,7 @@ public class testMarketplace {
 			System.out.println("");
 		}
 		}
+		return m.getIndexLoginUser().get(login);
 	}
 	
 	
@@ -408,6 +409,12 @@ public class testMarketplace {
 			while((line=reader.readLine()) != null) {
 				String[] row = line.split(",");
 				m.getIndexLoginPassword().put(row[0], row[1]);    //Vient charger les users du fichier csv
+				if(row[2].equals("client")) {
+					m.addClient(row[0], row[1], row[3], row[4], row[5], row[6]);
+				}
+				if(row[2].equals("vendeur")) {
+					m.addVendeur(row[0], row[1], row[3], row[4], row[5]);
+				}
 			}
 		}
 		catch(Exception e) {
@@ -459,12 +466,25 @@ public class testMarketplace {
 					choixInscription(marketplace);
 					break;
 				case 2 :   
-					seConnecter(marketplace);
+					User u=seConnecter(marketplace);
+					if(u.getClass().getSimpleName().equals("Client")) {
+						System.out.println("");
+						System.out.println("Bienvenue dans votre espace client : ");
+						System.out.println("");
+						menuClient(marketplace,u);
+					}
+					else {
+						System.out.println("");
+						System.out.println("Bienvenue dans votre espace vendeur : ");
+						System.out.println("");
+						menuVendeur(marketplace,u);
+					}
 					break;
 				
 				case 0 :   System.out.println("Bye Bye");
 					break;
 			}
+			choix=0;
 		}
 		} catch (IOError e) {
 			System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");

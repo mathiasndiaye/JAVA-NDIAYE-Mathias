@@ -44,6 +44,10 @@ public class Marketplace {
 		return indexLoginPassword;
 	}
 	
+	public Map<String, User> getIndexLoginUser(){
+		return indexLoginUser;
+	}
+	
 	// Méthodes de la classe Marketplace
 	@Override
 	public String toString() {
