@@ -1,7 +1,11 @@
 package marketplace;
 
 import java.time.LocalDate;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOError;
+import java.io.IOException;
 import java.lang.Object;
 import java.util.Scanner;
 
@@ -73,8 +77,13 @@ public class testMarketplace {
 		*/
 		
 		//Test menu vendeur
-		marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
-		menuVendeur(marketplace, marketplace.getListeUsers().get(0));
+		/*marketplace.addVendeur("yoyo", "4201", "0652957430", "Jean", "Ti");
+		menuVendeur(marketplace, marketplace.getListeUsers().get(0));*/
+		
+		chargerUsers(marketplace);
+		menuConnexionInscription(marketplace);
+		
+		
 	}
 				
 		
@@ -231,7 +240,39 @@ public class testMarketplace {
 	
 	//GESTION DES UTILISATEURS
  
-    
+    //Methode pour se connecter
+	private static void seConnecter(Marketplace m) {
+		String login;
+		String password;
+		boolean clientConnecte=false;
+		
+		while(clientConnecte==false) {
+		login=lireInfo("Login ");
+		password=lireInfo("Password ");
+		
+		//On verifie si les login et mot de passe sont bons
+		if(m.getIndexLoginPassword().containsKey(login)) {
+			if(m.getIndexLoginPassword().get(login).equals(password)) {
+				System.out.println("");
+				System.out.println("Connexion réussie");
+				System.out.println("");
+				clientConnecte=true;
+			}
+			else {
+			System.out.println("");
+			System.out.println("Mot de passe erroné. Recommencez.");
+			System.out.println("");
+			}
+		}
+		else {
+			System.out.println("");
+			System.out.println("Client introuvable. Recommencez");
+			System.out.println("");
+		}
+		}
+	}
+	
+	
 	//Methode pour inscrire un client 
 	private static void inscrireClient(Marketplace m) {
 		String login;
@@ -280,6 +321,36 @@ public class testMarketplace {
 		vendeurAjoute=m.addVendeur(login, password, tel, nom, prenom);
 				
 		if(vendeurAjoute) {
+			//Inscription du login et du password dans le fichier csv
+
+		    // first create file object for file placed at location
+		    // specified by filepath
+			/*String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files";
+		    File file = new File(filePath);
+		    try {
+		        // create FileWriter object with file as parameter
+		        FileWriter outputfile = new FileWriter(file);
+		  
+		        // create CSVWriter object filewriter object as parameter
+		        CSVWriter writer = new CSVWriter(outputfile);
+		  
+		        // adding header to csv
+		        String[] header = { "Name", "Class", "Marks" };
+		        writer.writeNext(header);
+		  
+		        // add data to csv
+		        String[] data1 = { "Aman", "10", "620" };
+		        writer.writeNext(data1);
+		        String[] data2 = { "Suraj", "10", "630" };
+		        writer.writeNext(data2);
+		  
+		        // closing writer connection
+		        writer.close();
+		    }
+		    catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }*/
 			System.out.println("Inscription réussie");
 		}
 		else {
@@ -327,7 +398,30 @@ public class testMarketplace {
 	}
 	
 	
-	
+	//Charger les users à partir du fichier csv
+	private static void chargerUsers(Marketplace m) {
+		String filepath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\user.csv";
+		BufferedReader reader = null;
+		String line="";
+		try {
+			reader=new BufferedReader(new FileReader(filepath));
+			while((line=reader.readLine()) != null) {
+				String[] row = line.split(",");
+				m.getIndexLoginPassword().put(row[0], row[1]);    //Vient charger les users du fichier csv
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	//AFFICHAGE DES MENUS
 	//Gere saisie menu 
@@ -349,22 +443,7 @@ public class testMarketplace {
 		} while (erreur || choix<borneMin || choix>borneMax);
 		return choix;
 	}
-	
-	private static void afficherMenuAuthentification() {
-		System.out.println("Menu :");
-		System.out.println("");
-		System.out.println("(1) Créer un compte");
-		System.out.println("(2) Se connecter");
-		System.out.println("");
-	}
-	
-	private static void afficherMenuInscription() {
-		System.out.println("Inscription en tant que : ");
-		System.out.println("");
-		System.out.println("(1) Client");
-		System.out.println("(2) Vendeur");
-		System.out.println("");
-	}
+
 	
 	//Affichage du menu d'inscription ou de connexion
 	private static void menuConnexionInscription(Marketplace marketplace) {
@@ -380,7 +459,7 @@ public class testMarketplace {
 					choixInscription(marketplace);
 					break;
 				case 2 :   
-					//methode connexion
+					seConnecter(marketplace);
 					break;
 				
 				case 0 :   System.out.println("Bye Bye");
@@ -484,6 +563,22 @@ public class testMarketplace {
 		} catch (IOError e) {
 			System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");
 		}
+	}
+	
+	private static void afficherMenuAuthentification() {
+		System.out.println("Menu :");
+		System.out.println("");
+		System.out.println("(1) Créer un compte");
+		System.out.println("(2) Se connecter");
+		System.out.println("");
+	}
+	
+	private static void afficherMenuInscription() {
+		System.out.println("Inscription en tant que : ");
+		System.out.println("");
+		System.out.println("(1) Client");
+		System.out.println("(2) Vendeur");
+		System.out.println("");
 	}
 	
 	private static void afficherMenuClient() {

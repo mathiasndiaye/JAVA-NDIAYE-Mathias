@@ -15,7 +15,7 @@ public class Marketplace {
 	//Indexation des User
 	private Map<String,User> indexLoginUser;     //Permet de mapper un login avec son User
 	private Map<String, Produit> indexRefProduit;   //Permet de mapper une ref produit avec son produit
-	
+	private Map<String, String> indexLoginPassword;  //Permet de mapper un login avec son password
 	
 	//Constructeur de la classe Marketplace
 	public Marketplace() {
@@ -23,6 +23,7 @@ public class Marketplace {
 		listeUsers=new ArrayList<User>();
 		indexLoginUser= new HashMap<String,User>();
 		indexRefProduit=new HashMap<String,Produit>();
+		indexLoginPassword=new HashMap<String,String>();
 	}
 	
 	
@@ -39,6 +40,9 @@ public class Marketplace {
 		return indexRefProduit;
 	}
 	
+	public Map<String, String> getIndexLoginPassword(){
+		return indexLoginPassword;
+	}
 	
 	// Méthodes de la classe Marketplace
 	@Override
@@ -110,7 +114,7 @@ public class Marketplace {
 		private <K> boolean removeProduit(K clef, Map<K,Produit> index) {
 			Produit produitASupprimer;
 			if (!index.containsKey(clef)) {
-				// Le CD n'est pas référencé
+				// Le produit n'est pas référencé
 				return false;
 			}
 			produitASupprimer = index.get(clef);
