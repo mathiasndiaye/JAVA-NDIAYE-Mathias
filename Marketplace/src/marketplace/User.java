@@ -87,4 +87,8 @@ public abstract class User {
 		//Nothing here, we override it in vendeur class
 	}
 	
+	public void afficherPanier() {
+		//Nothing here, we override it in vendeur class
+	}
+	
 }

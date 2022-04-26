@@ -153,6 +153,7 @@ public class Marketplace {
 		//Indexation du User
 		if(ajoutOK) {
 			indexLoginUser.put(u.getLogin(), u);
+			indexLoginPassword.put(u.getLogin(), u.getPassword());
 		}
 		
 		return ajoutOK;

@@ -295,7 +295,9 @@ public class testMarketplace {
 		clientAjoute=m.addClient(login, password, tel, nom, prenom, adresse);
 				
 		if(clientAjoute) {
+			System.out.println(" ");
 			System.out.println("Inscription réussie");
+			System.out.println(" ");
 		}
 		else {
 			System.out.println("Vous possedez déjà un compte. Veuillez vous connecter");
@@ -352,7 +354,9 @@ public class testMarketplace {
 		        // TODO Auto-generated catch block
 		        e.printStackTrace();
 		    }*/
+			System.out.println(" ");
 			System.out.println("Inscription réussie");
+			System.out.println(" ");
 		}
 		else {
 			System.out.println("Vous possedez déjà un compte. Veuillez vous connecter");
@@ -396,6 +400,13 @@ public class testMarketplace {
 	//Vider le Panier d'un client
 	private static void viderPanier(User u) {
 		u.viderPanier();
+	}
+	
+	//Afficher le panier d'un client
+	private static void afficherPanier(User u) {
+		System.out.println("");
+		u.afficherPanier();
+		System.out.println("");
 	}
 	
 	
@@ -503,15 +514,18 @@ public class testMarketplace {
 				switch (choix2){
 					case 1 :   
 						inscrireClient(marketplace);
+						menuConnexionInscription(marketplace);
 						break;
 					case 2 :   
 						inscrireVendeur(marketplace);
+						menuConnexionInscription(marketplace);
 						break;
 					
 					case 0 :   
 						System.out.println("Bye Bye");
 						break;
 				}
+				choix2=0;
 			}
 			} catch (IOError e) {
 				System.err.println("Erreur grave d'entrÃ©e/sortie, fin de l'application");
@@ -524,7 +538,7 @@ public class testMarketplace {
 		try {
 		while (choix!=0) {
 			afficherMenuClient();  //A FAIRE : Afficher solde du client 
-			choix = saisieChoix(0,3);	
+			choix = saisieChoix(0,5);	
 			System.out.println("\n--------------------------------------------");
 			switch (choix){
 				case 1 : 
@@ -541,9 +555,14 @@ public class testMarketplace {
 					//acheter(clt);
 					break;
 					
-				//case 4 :
-					//afficherPanier();
-					//break;
+				case 4 :
+					afficherPanier(u);
+					break;
+					
+				case 5 : 
+					System.out.println("Déconnexion réussie");
+					menuConnexionInscription(m);
+					break;
 					
 				case 0 :   System.out.println("Bye Bye");
 					break;
@@ -560,7 +579,7 @@ public class testMarketplace {
 		try {
 		while (choix!=0) {
 			afficherMenuVendeur();
-			choix = saisieChoix(0,3);	
+			choix = saisieChoix(0,4);	
 			System.out.println("\n--------------------------------------------");
 			switch (choix){
 				case 1 : 
@@ -575,6 +594,11 @@ public class testMarketplace {
 				case 3 :
 					afficherProduits(m,u);
 					break;
+					
+				case 4 : 
+					System.out.println("Déconnexion réussie");
+					menuConnexionInscription(m);
+					break;
 				
 				case 0 :   System.out.println("Bye Bye");
 					break;
@@ -586,7 +610,7 @@ public class testMarketplace {
 	}
 	
 	private static void afficherMenuAuthentification() {
-		System.out.println("Menu :");
+		System.out.println("Veuillez vous connecter ou vous inscrire :");
 		System.out.println("");
 		System.out.println("(1) Créer un compte");
 		System.out.println("(2) Se connecter");
@@ -607,6 +631,8 @@ public class testMarketplace {
 		System.out.println("(1) Ajouter au panier");
 		System.out.println("(2) Vider le panier");
 		System.out.println("(3) Acheter");
+		System.out.println("(4) Afficher mon panier");
+		System.out.println("(5) Se déconnecter");
 		System.out.println("");
 		
 }
@@ -617,6 +643,7 @@ public class testMarketplace {
 		System.out.println("(1) Ajouter un produit");
 		System.out.println("(2) Retirer un produit");
 		System.out.println("(3) Afficher ma liste de produits à la vente");
+		System.out.println("(4) Se déconnecter");
 		System.out.println("");
 		
 }

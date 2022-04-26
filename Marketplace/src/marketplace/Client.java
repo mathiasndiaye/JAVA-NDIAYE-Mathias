@@ -72,6 +72,19 @@ public class Client extends User {
 		panier.viderPanier();
 	}
 	
+	//Affiche le panier
+	@Override
+	public void afficherPanier() {
+		System.out.println("Mon panier : ");
+		System.out.println("");
+		for(int i=0; i<panier.getListeProduits().size(); i++) {
+			System.out.println("Reference : " + panier.getListeProduits().get(i).getReference() + "   -----   " + "Prix : " + panier.getListeProduits().get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + panier.getListeProduits().get(i).getDelai_livraison() + " jours");
+		}
+		System.out.println("");
+		System.out.println("");
+		System.out.println("Montant total : " + panier.getMontant() + " €");
+	}
+	
 
 	
 }
