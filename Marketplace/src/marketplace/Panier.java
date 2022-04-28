@@ -43,6 +43,11 @@ public class Panier {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "Panier [montant=" + montant + ", listeProduits=" + listeProduits + "]";
+	}
+
 	public void retirerProduit(Produit p) {
 		listeProduits.remove(p);
 		montant=montant-p.getPrix();
@@ -53,7 +58,6 @@ public class Panier {
 		while(iterator.hasNext()) {
 			Produit p=iterator.next();
 			iterator.remove();
-			montant=montant-p.getPrix();
 		}
 		montant=0;
 	}

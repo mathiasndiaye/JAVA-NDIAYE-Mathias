@@ -117,4 +117,8 @@ public abstract class User {
 		return null; //We override it in client
 	}
 	
+	public void retirerSolde(double m) {
+		solde=solde-m;
+	}
+	
 }

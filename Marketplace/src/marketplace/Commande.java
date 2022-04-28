@@ -13,7 +13,6 @@ public class Commande {
 	public Commande(int numero, int mode_de_livraison) {
 		this.numero = numero;
 		this.mode_de_livraison = mode_de_livraison;
-		this.panier=null;
 	}
 	
 	//Getters et Setters de la classe Commande
@@ -34,10 +33,15 @@ public class Commande {
 	}
 	
 	public void setPanier(Panier p) {
-		panier=p;
+		this.panier=p;
 	}
 	
 	public Panier getPanier() {
 		return panier;
+	}
+
+	@Override
+	public String toString() {
+		return "Commande [numero=" + numero + ", mode_de_livraison=" + mode_de_livraison + ", panier=" + panier + "]";
 	}
 }

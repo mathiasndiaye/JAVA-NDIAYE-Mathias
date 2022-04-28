@@ -84,6 +84,7 @@ public class testMarketplace {
 		menuConnexionInscription(marketplace);
 		
 		
+		
 	}
 				
 		
@@ -460,28 +461,32 @@ public class testMarketplace {
 		}
 		else {
 			Commande commande = new Commande(numCommande, choixLivraison);
-			commande.setPanier(u.getPanier());
+			Panier panier=new Panier();
+			panier=u.getPanier();
+			commande.setPanier(panier);
 			u.addListeCommandes(commande);
-			viderPanier(u);
-			u.setSolde(u.getSolde()-u.getPanier().getMontant());
+			u.retirerSolde(u.getPanier().getMontant());
 			System.out.println("Commande passée avec succès.");
 		}
 		
 	}
 	
 	
-	//Afficher la liste des commande d'un client
+	//Afficher la liste des commandes d'un client
 	private static void afficherListeCommandes(User u) {
 		System.out.println("Mes commandes : ");
 		System.out.println("");
 		for(int i=0; i<u.getListeCommandes().size(); i++ ) {
 			System.out.println("Commande "+u.getListeCommandes().get(i).getNumero()+" : ");
+			//System.out.println(u.getListeCommandes().get(i).toString());
 			u.getListeCommandes().get(i).getPanier().afficherPanier();
-			System.out.print("Montant de la commande : "+u.getListeCommandes().get(i).getPanier().getMontant());
-			if(u.getListeCommandes().get(i).getMode_de_livraison()==1)
+			System.out.print("Montant de la commande : "+u.getListeCommandes().get(i).getPanier().getMontant() + "€");
+			if(u.getListeCommandes().get(i).getMode_de_livraison()==1) {
 				System.out.println("                 Mode de livraison : Livraison standard");
-			else
+			}
+			else {
 				System.out.println("                 Mode de livraison : Livraison en point relais");
+			}
 		}
 	}
 	
@@ -629,6 +634,7 @@ public class testMarketplace {
 				
 				case 3 :   
 					acheter(u);
+					//viderPanier(u);
 					break;
 					
 				case 4 :
