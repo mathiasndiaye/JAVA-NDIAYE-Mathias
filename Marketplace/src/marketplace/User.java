@@ -1,5 +1,6 @@
 package marketplace;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class User {
@@ -11,6 +12,7 @@ public abstract class User {
 	private String tel;
 	private String nom;
 	private String prenom;
+	private double solde;
 	
 	
 	// Constructeur de la classe User
@@ -20,6 +22,7 @@ public abstract class User {
 		this.tel = tel;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.solde=0;
 	}
 	
 	
@@ -54,7 +57,14 @@ public abstract class User {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
+	public double getSolde() {
+		return solde;
+	}
+	public void setSolde(double solde) {
+		this.solde = solde;
+	}
+
+
 	public Map<String, Produit> getIndexRefProduit() {
 		return null;
 	}
@@ -63,7 +73,7 @@ public abstract class User {
 	//Méthodes de la classe User 
 	public String toString() {
 		String u;
-		u="[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + "]";
+		u="[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + ", Solde : " + this.getSolde() +"€]";
 		return u;
 	}
 	
@@ -80,15 +90,31 @@ public abstract class User {
 	}
 	
 	public void ajouterPanier(Produit p) {
-		//Nothing here, we override it in vendeur class
+		//Nothing here, we override it in client class
 	}
 
 	public void viderPanier() {
-		//Nothing here, we override it in vendeur class
+		//Nothing here, we override it in client class
 	}
 	
 	public void afficherPanier() {
-		//Nothing here, we override it in vendeur class
+		//Nothing here, we override it in client class
+	}
+	
+	public void crediterCompte(double m) {
+		solde=solde+m;
+	}
+	
+	public Panier getPanier() {
+		return null;   //We override it in client
+	}
+	
+	public void addListeCommandes(Commande c) {
+		//We override it in client
+	}
+	
+	public ArrayList<Commande> getListeCommandes() {
+		return null; //We override it in client
 	}
 	
 }

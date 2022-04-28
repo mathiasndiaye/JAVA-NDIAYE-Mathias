@@ -37,9 +37,10 @@ public class Panier {
 	}
 	
 	//Méthodes de la classe panier
-	@Override
-	public String toString() {
-		return "Panier [montant=" + montant + ", listeProduits=" + listeProduits + "]";
+	public void afficherPanier() {
+		for(int i=0; i<listeProduits.size(); i++) {
+			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours");
+		}
 	}
 	
 	public void retirerProduit(Produit p) {
@@ -54,6 +55,7 @@ public class Panier {
 			iterator.remove();
 			montant=montant-p.getPrix();
 		}
+		montant=0;
 	}
 	
 }

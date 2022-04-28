@@ -7,13 +7,14 @@ public class Client extends User {
 	// Variables de la classe Client
 	private String adresse;
 	private Panier panier;
-	//private double solde;
+	private ArrayList<Commande> listeCommandes;
 	
 	//Constructeur de la classe Client
 	public Client(String login, String password, String tel, String nom, String prenom, String adresse){
 		super(login, password, tel, nom, prenom);
 		this.adresse=adresse;
 		this.panier= new Panier();
+		listeCommandes=new ArrayList<Commande>();
 	}
 
 	//Getter et setter de la Classe Client
@@ -25,6 +26,7 @@ public class Client extends User {
 		this.adresse = adresse;
 	}
 	
+	@Override
 	public Panier getPanier() {
 		return panier;
 	}
@@ -33,10 +35,15 @@ public class Client extends User {
 		this.panier = panier;
 	}
 
+	@Override
+	public ArrayList<Commande> getListeCommandes() {
+		return listeCommandes;
+	}
+	
 	//Méthodes de la classe Client
 	@Override
 	public String toString() {
-		return "[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + ", adresse : " + adresse +"]";
+		return "[Login :" + this.getLogin() + ", Password : " + this.getPassword() +", Tel : " + this.getTel() + ", Nom : " + this.getNom() + ", Prenom : " + this.getPrenom() + ", adresse : " + adresse + ", solde : "+ this.getSolde() +"€]";
 	}
 	
 	void Acheter() {
@@ -82,9 +89,14 @@ public class Client extends User {
 		}
 		System.out.println("");
 		System.out.println("");
-		System.out.println("Montant total : " + panier.getMontant() + " €");
+		System.out.println("Montant total : " + panier.getMontant() + " €" + "                      Solde disponible sur mon compte : " + this.getSolde() + " €");
 	}
 	
+	//Ajouter une commande à la liste de commande
+	@Override
+	public void addListeCommandes(Commande c) {
+		listeCommandes.add(c);
+	}
 
 	
 }

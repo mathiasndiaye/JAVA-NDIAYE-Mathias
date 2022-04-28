@@ -409,6 +409,82 @@ public class testMarketplace {
 		System.out.println("");
 	}
 	
+	//Méthode pour saisie montant à créditer
+	private static double saisieMontant() {
+		double montant = 0;
+		boolean erreur;
+		String lecture; // buffer de lecture clavier
+
+		// lecture du choix jusqu'Ã  ce qu'elle soit correcte
+		do {
+			try {
+				erreur = false;
+				lecture = lireInfo("Montant à créditer ");
+				montant = Double.parseDouble(lecture);
+			} catch (NumberFormatException e) {
+				//erreur
+				erreur = true;
+			}
+		} while (erreur || montant<0);
+		return montant;
+	}
+	
+	//Crediter le compte d'un client
+	private static void crediterCompte(User u) {
+		double montant;
+		montant=saisieMontant();
+		u.crediterCompte(montant);
+		System.out.println("");
+		System.out.println("Le montant a été crédité sur votre compte avec succès");
+		System.out.println("");
+	}
+	
+	
+	//Passer commande pour le client
+	private static void acheter(User u) {
+		int numCommande;
+		int choixLivraison;
+		System.out.println("");
+		System.out.println("Veuillez écrire le numéro de la commande : ");
+		numCommande=saisieChoix(1,10);
+		System.out.println("");
+		System.out.println("Veuillez saisir le mode de livraison :");
+		System.out.println("");
+		System.out.println("(1) Livraison standard");
+		System.out.println("(2) Livraison en point relais");
+		System.out.println("");
+		choixLivraison=saisieChoix(1,2);
+		System.out.println("");
+		if(u.getPanier().getMontant()>u.getSolde()) {
+			System.out.println("Désolé vous ne disposez pas de suffisaments de fonds pour passer cette commande. Veuillez créditer votre compte.");
+		}
+		else {
+			Commande commande = new Commande(numCommande, choixLivraison);
+			commande.setPanier(u.getPanier());
+			u.addListeCommandes(commande);
+			viderPanier(u);
+			u.setSolde(u.getSolde()-u.getPanier().getMontant());
+			System.out.println("Commande passée avec succès.");
+		}
+		
+	}
+	
+	
+	//Afficher la liste des commande d'un client
+	private static void afficherListeCommandes(User u) {
+		System.out.println("Mes commandes : ");
+		System.out.println("");
+		for(int i=0; i<u.getListeCommandes().size(); i++ ) {
+			System.out.println("Commande "+u.getListeCommandes().get(i).getNumero()+" : ");
+			u.getListeCommandes().get(i).getPanier().afficherPanier();
+			System.out.print("Montant de la commande : "+u.getListeCommandes().get(i).getPanier().getMontant());
+			if(u.getListeCommandes().get(i).getMode_de_livraison()==1)
+				System.out.println("                 Mode de livraison : Livraison standard");
+			else
+				System.out.println("                 Mode de livraison : Livraison en point relais");
+		}
+	}
+	
 	
 	//Charger les users à partir du fichier csv
 	private static void chargerUsers(Marketplace m) {
@@ -538,7 +614,7 @@ public class testMarketplace {
 		try {
 		while (choix!=0) {
 			afficherMenuClient();  //A FAIRE : Afficher solde du client 
-			choix = saisieChoix(0,5);	
+			choix = saisieChoix(0,7);	
 			System.out.println("\n--------------------------------------------");
 			switch (choix){
 				case 1 : 
@@ -552,14 +628,22 @@ public class testMarketplace {
 					break;
 				
 				case 3 :   
-					//acheter(clt);
+					acheter(u);
 					break;
 					
 				case 4 :
 					afficherPanier(u);
 					break;
 					
-				case 5 : 
+				case 5 :
+					afficherListeCommandes(u);
+					break;
+					
+				case 6 : 
+					crediterCompte(u);
+					break;
+					
+				case 7 : 
 					System.out.println("Déconnexion réussie");
 					menuConnexionInscription(m);
 					break;
@@ -632,7 +716,9 @@ public class testMarketplace {
 		System.out.println("(2) Vider le panier");
 		System.out.println("(3) Acheter");
 		System.out.println("(4) Afficher mon panier");
-		System.out.println("(5) Se déconnecter");
+		System.out.println("(5) Afficher ma liste de commandes");
+		System.out.println("(6) Créditer mon compte");
+		System.out.println("(7) Se déconnecter");
 		System.out.println("");
 		
 }
