@@ -54,11 +54,13 @@ public class Panier {
 	}
 	
 	public void viderPanier() {
+		listeProduits.clear();
+		/*
 		Iterator<Produit> iterator = listeProduits.iterator();
 		while(iterator.hasNext()) {
 			Produit p=iterator.next();
 			iterator.remove();
-		}
+		}*/
 		montant=0;
 	}
 	

@@ -1,11 +1,13 @@
 package marketplace;
 
 import java.time.LocalDate;
+import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.Object;
 import java.util.Scanner;
 
@@ -81,6 +83,7 @@ public class testMarketplace {
 		menuVendeur(marketplace, marketplace.getListeUsers().get(0));*/
 		
 		chargerUsers(marketplace);
+		chargerProduits(marketplace);
 		menuConnexionInscription(marketplace);
 		
 		
@@ -186,6 +189,26 @@ public class testMarketplace {
 		}
 		
 		if(produitAjoute==true) {
+			//Inscription du produit dans le fichier csv
+			String text = u.getLogin() + "," + reference + "," + prix + "," + delai_livraison + "," + "\n";
+		    // first create file object for file placed at location
+		    // specified by filepath
+			String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\produit.csv";
+			File file = new File(filePath);
+			try {
+		        // create FileWriter object with file as parameter
+				PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+		  
+		        //write into the file
+		        writer.append(text);
+		  
+		        // close the file
+		     	writer.close();
+		    }
+		    catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        System.out.print(e.getMessage());
+		    }
 			System.out.println("Produit ajouté à votre liste des produits");
 		}
 		else {
@@ -296,6 +319,30 @@ public class testMarketplace {
 		clientAjoute=m.addClient(login, password, tel, nom, prenom, adresse);
 				
 		if(clientAjoute) {
+			//Inscription du login et du password dans le fichier csv
+			String text = login + "," + password + "," + "client," + tel + ", " + nom + "," + prenom + "," + adresse + ","+ "\n";
+		    
+		    // specified by filepath
+			String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\user.csv";
+			File file = new File(filePath);
+			try {
+		        // create FileWriter object with file as parameter
+				PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+		  
+		        //write into the file
+		        writer.append(text);
+		  
+		        // close the file
+		     	writer.close();
+		    }
+		    catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        System.out.print(e.getMessage());
+		    }
+			System.out.println(" ");
+			System.out.println("Inscription réussie");
+			System.out.println(" ");
+			
 			System.out.println(" ");
 			System.out.println("Inscription réussie");
 			System.out.println(" ");
@@ -323,38 +370,30 @@ public class testMarketplace {
 		
 		//On cree le produit et l'ajoute à la liste des produits
 		vendeurAjoute=m.addVendeur(login, password, tel, nom, prenom);
-				
+		
+		
 		if(vendeurAjoute) {
+			
 			//Inscription du login et du password dans le fichier csv
-
+			String text = login + "," + password + ",vendeur," + tel + "," + nom + "," + prenom + "," + "\n";
 		    // first create file object for file placed at location
 		    // specified by filepath
-			/*String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files";
-		    File file = new File(filePath);
-		    try {
+			String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\user.csv";
+			File file = new File(filePath);
+			try {
 		        // create FileWriter object with file as parameter
-		        FileWriter outputfile = new FileWriter(file);
+				PrintWriter writer = new PrintWriter(new FileWriter(file, true));
 		  
-		        // create CSVWriter object filewriter object as parameter
-		        CSVWriter writer = new CSVWriter(outputfile);
+		        //write into the file
+		        writer.append(text);
 		  
-		        // adding header to csv
-		        String[] header = { "Name", "Class", "Marks" };
-		        writer.writeNext(header);
-		  
-		        // add data to csv
-		        String[] data1 = { "Aman", "10", "620" };
-		        writer.writeNext(data1);
-		        String[] data2 = { "Suraj", "10", "630" };
-		        writer.writeNext(data2);
-		  
-		        // closing writer connection
-		        writer.close();
+		        // close the file
+		     	writer.close();
 		    }
 		    catch (IOException e) {
 		        // TODO Auto-generated catch block
-		        e.printStackTrace();
-		    }*/
+		        System.out.print(e.getMessage());
+		    }
 			System.out.println(" ");
 			System.out.println("Inscription réussie");
 			System.out.println(" ");
@@ -461,8 +500,8 @@ public class testMarketplace {
 		}
 		else {
 			Commande commande = new Commande(numCommande, choixLivraison);
-			Panier panier=new Panier();
-			panier=u.getPanier();
+			final Panier panier=u.getPanier();
+			//panier=u.getPanier();
 			commande.setPanier(panier);
 			u.addListeCommandes(commande);
 			u.retirerSolde(u.getPanier().getMontant());
@@ -480,6 +519,7 @@ public class testMarketplace {
 			System.out.println("Commande "+u.getListeCommandes().get(i).getNumero()+" : ");
 			//System.out.println(u.getListeCommandes().get(i).toString());
 			u.getListeCommandes().get(i).getPanier().afficherPanier();
+			System.out.println("");
 			System.out.print("Montant de la commande : "+u.getListeCommandes().get(i).getPanier().getMontant() + "€");
 			if(u.getListeCommandes().get(i).getMode_de_livraison()==1) {
 				System.out.println("                 Mode de livraison : Livraison standard");
@@ -521,6 +561,36 @@ public class testMarketplace {
 			}
 		}
 	}
+	
+	
+	//Charger les produits à partir du fichier csv
+		private static void chargerProduits(Marketplace m) {
+			String filepath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\produit.csv";
+			BufferedReader reader = null;
+			String line="";
+			try {
+				reader=new BufferedReader(new FileReader(filepath));
+				while((line=reader.readLine()) != null) {
+					String[] row = line.split(",");
+					User u = m.getIndexLoginUser().get(row[0]);
+					Produit p = new Produit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]));
+					m.getIndexRefProduit().put(row[1], p);    //Vient charger les produits du fichier csv
+					u.addProduit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]));
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 	
 	//AFFICHAGE DES MENUS
 	//Gere saisie menu 
@@ -613,12 +683,13 @@ public class testMarketplace {
 			}
 		}
 	
+
 	private static void menuClient(Marketplace m, User u) {
 		int choix=-1; 
 	    
 		try {
 		while (choix!=0) {
-			afficherMenuClient();  //A FAIRE : Afficher solde du client 
+			afficherMenuClient();  
 			choix = saisieChoix(0,7);	
 			System.out.println("\n--------------------------------------------");
 			switch (choix){

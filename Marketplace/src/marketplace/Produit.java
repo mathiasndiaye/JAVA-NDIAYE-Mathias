@@ -8,7 +8,6 @@ public class Produit {
 	private double prix;
 	private int delai_livraison;   //délai en jours
 	
-	
 	// Constructeur de la classe Produit
 	public Produit(String reference, double prix, int delai_livraison) {
 		super();
