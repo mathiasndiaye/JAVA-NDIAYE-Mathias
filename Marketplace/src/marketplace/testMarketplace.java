@@ -147,21 +147,40 @@ public class testMarketplace {
 		return delai;
 	}
     
+    //Lis entree utilisateur pour quantite
+    private static int saisieQuantite(){
+		String chaineQte;
+		int qte = -1;
+		boolean erreur;
+		do {
+			try {
+				erreur = false;
+				chaineQte= lireInfo("Quantite ");
+				qte = Integer.parseInt(chaineQte);
+			} catch (NumberFormatException e) {
+				erreur = true;
+			}
+		} while (erreur || (qte < 0));
+		return qte;
+	}
+    
 	
 	//Ajouter un produit a la liste des produits marketplace
 	private static void addProduit(Marketplace m) {
 		String reference;
 		double prix;
 		int delai_livraison;
+		int quantite;
 		boolean produitAjoute;
 		
 		//On lit les entrées de l'utilisateur
 		reference=lireInfo("Reference ");
 		prix=saisiePrix();
 		delai_livraison=saisieDelai();
+		quantite=saisieQuantite();
 		
 		//On cree le produit et l'ajoute à la liste des produits
-		produitAjoute=m.addProduit(reference, prix, delai_livraison);
+		produitAjoute=m.addProduit(reference, prix, delai_livraison, quantite);
 		
 		if(produitAjoute) {
 			System.out.println("Produit ajouté à la liste des produits du Marketplace");
@@ -176,21 +195,23 @@ public class testMarketplace {
 		String reference;
 		double prix;
 		int delai_livraison;
+		int quantite;
 		boolean produitAjoute=false;
 		
 		//On lit les entrées de l'utilisateur
 		reference=lireInfo("Reference ");
 		prix=saisiePrix();
 		delai_livraison=saisieDelai();
+		quantite=saisieQuantite();
 		
 		//On cree le produit et l'ajoute à la liste des produits
 		if(u.getClass().getSimpleName().equals("Vendeur")) {
-			produitAjoute=u.addProduit(reference, prix, delai_livraison);
+			produitAjoute=u.addProduit(reference, prix, delai_livraison, quantite);
 		}
 		
 		if(produitAjoute==true) {
 			//Inscription du produit dans le fichier csv
-			String text = u.getLogin() + "," + reference + "," + prix + "," + delai_livraison + "," + "\n";
+			String text = u.getLogin() + "," + reference + "," + prix + "," + delai_livraison + "," + quantite + "," + "\n";
 		    // first create file object for file placed at location
 		    // specified by filepath
 			String filePath="C:\\Users\\CYTech Student\\git\\Marketplace\\Marketplace\\data_files\\produit.csv";
@@ -425,6 +446,12 @@ public class testMarketplace {
 				if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur")){
 					if(m.getListeUsers().get(i).getIndexRefProduit().containsKey(refProduit)) {
 						u.ajouterPanier(m.getListeUsers().get(i).getIndexRefProduit().get(refProduit));
+						for(int j=0; j<m.getListeUsers().get(i).getListeProduits().size(); j++) {
+							if(m.getListeUsers().get(i).getListeProduits().get(j).getReference().equals(refProduit)) {
+								int qte=m.getListeUsers().get(i).getListeProduits().get(j).getQuantite();
+								m.getListeUsers().get(i).getListeProduits().get(j).setQuantite(qte-1);
+							}
+						}
 						System.out.println("Article ajouté au panier avec succès.");
 						return; //pour arreter la méthode
 					}
@@ -573,9 +600,9 @@ public class testMarketplace {
 				while((line=reader.readLine()) != null) {
 					String[] row = line.split(",");
 					User u = m.getIndexLoginUser().get(row[0]);
-					Produit p = new Produit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]));
+					Produit p = new Produit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]), Integer.parseInt(row[4]));
 					m.getIndexRefProduit().put(row[1], p);    //Vient charger les produits du fichier csv
-					u.addProduit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]));
+					u.addProduit(row[1], Double.parseDouble(row[2]), Integer.parseInt(row[3]), Integer.parseInt(row[4]));
 				}
 			}
 			catch(Exception e) {

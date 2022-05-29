@@ -28,6 +28,7 @@ public class Vendeur extends User {
 		this.contrat = contrat;
 	}
 
+	@Override
 	public ArrayList<Produit> getListeProduits() {
 		return listeProduits;
 	}
@@ -76,8 +77,8 @@ public class Vendeur extends User {
 	
 	//Ajoute un produit à la liste en fonction des paramètres 
 	@Override
-	public boolean addProduit(String ref, double prix, int delai_livraison) {
-		Produit p=new Produit(ref, prix, delai_livraison);
+	public boolean addProduit(String ref, double prix, int delai_livraison, int quantite) {
+		Produit p=new Produit(ref, prix, delai_livraison, quantite);
 		return this.addProduit(p);
 	}
 	
@@ -125,7 +126,7 @@ public class Vendeur extends User {
 		System.out.println("Liste des produits vendues par " + this.getLogin() + " : ");
 		System.out.println("");
 		for(int i=0; i<listeProduits.size(); i++) {
-			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours");
+			System.out.println("Reference : " + listeProduits.get(i).getReference() + "   -----   " + "Prix : " + listeProduits.get(i).getPrix() + "€" + "   -----   " + "Délai de livraison : " + listeProduits.get(i).getDelai_livraison() + " jours" + "   -----   " + "Quantite : " + listeProduits.get(i).getQuantite() );
 		}
 		}
 	}

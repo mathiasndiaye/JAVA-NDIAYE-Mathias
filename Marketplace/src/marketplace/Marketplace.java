@@ -98,8 +98,8 @@ public class Marketplace {
 	}
 	
 	//Ajoute un produit à la liste en fonction des paramètres 
-	public boolean addProduit(String ref, double prix, int delai_livraison) {
-		Produit p=new Produit(ref, prix, delai_livraison);
+	public boolean addProduit(String ref, double prix, int delai_livraison, int quantite) {
+		Produit p=new Produit(ref, prix, delai_livraison, quantite);
 		return this.addProduit(p);
 	}
 	

@@ -7,13 +7,15 @@ public class Produit {
 	private String reference;
 	private double prix;
 	private int delai_livraison;   //délai en jours
+	private int quantite;
 	
 	// Constructeur de la classe Produit
-	public Produit(String reference, double prix, int delai_livraison) {
+	public Produit(String reference, double prix, int delai_livraison, int quantite) {
 		super();
 		this.reference = reference;
 		this.prix = prix;
 		this.delai_livraison = delai_livraison;
+		this.quantite=quantite;
 	}
 	
 	
@@ -36,11 +38,19 @@ public class Produit {
 	public void setDelai_livraison(int delai_livraison) {
 		this.delai_livraison = delai_livraison;
 	}
+	public int getQuantite() {
+		return this.quantite;
+	}
+	public void setQuantite(int quantite) {
+		this.quantite=quantite;
+	}
 
 
 	//Méthodes de la classe Produit
 	@Override
 	public String toString() {
-		return "[reference=" + reference + ", prix=" + prix + ", delai_livraison=" + delai_livraison + "]";
+		return "Produit [reference=" + reference + ", prix=" + prix + ", delai_livraison=" + delai_livraison
+				+ ", quantite=" + quantite + "]";
 	}
+	
 }

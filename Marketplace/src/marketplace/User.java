@@ -85,7 +85,7 @@ public abstract class User {
 		return false;     //We override it in vendeur class
 		}
 	
-	public boolean addProduit(String reference, double prix, int delai_livraison) {
+	public boolean addProduit(String reference, double prix, int delai_livraison, int quantite) {
 		return false; //We redefenite it in vendeur class
 	}
 	
@@ -107,6 +107,10 @@ public abstract class User {
 	
 	public Panier getPanier() {
 		return null;   //We override it in client
+	}
+	
+	public ArrayList<Produit> getListeProduits(){
+		return null; //We override it in vendeur
 	}
 	
 	public void addListeCommandes(Commande c) {
