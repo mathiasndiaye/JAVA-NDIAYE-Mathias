@@ -53,4 +53,8 @@ public class Produit {
 				+ ", quantite=" + quantite + "]";
 	}
 	
+	public void QtiteMoins1() {
+		this.quantite--;
+	}
+	
 }

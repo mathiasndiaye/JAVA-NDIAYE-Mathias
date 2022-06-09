@@ -431,33 +431,38 @@ public class testMarketplace {
 	//Ajoute un article au panier selon la ref saisie par le client. Attention, on considère que la reference d'un produit constitue la clé primaire de notre table produit. Par consequent on imagine que 2 artciles n'auront jamais la meme ref. Si cela venait à arriver, cette méthode ajoute uniquement le premier article au panier. 
 	private static void ajouterPanier(Marketplace m, User u) {
 		String refProduit;
+		boolean dispo=false;
 		
-		refProduit=lireInfo("Veuillez inscrire la référence du produit que vous voulez achetez ");
+		refProduit=lireInfo("Veuillez inscrire la référence du produit que vous voulez achetez ");	
 		
 		//Verifie si le produit avec cette ref est vendu par le marketplace
+		/*
 		if(m.getIndexRefProduit().containsKey(refProduit)) {
 			u.ajouterPanier(m.getIndexRefProduit().get(refProduit));
 			System.out.println("Article ajouté au panier avec succès.");
 			return; //Pour arreter la méthode
-		}
+		}*/
 		
 		//Verifie si le produit avec cette ref est vendu par un des vendeurs
 		for(int i=0; i<m.getListeUsers().size(); i++) {
 				if(m.getListeUsers().get(i).getClass().getSimpleName().equals("Vendeur")){
 					if(m.getListeUsers().get(i).getIndexRefProduit().containsKey(refProduit)) {
-						u.ajouterPanier(m.getListeUsers().get(i).getIndexRefProduit().get(refProduit));
-						for(int j=0; j<m.getListeUsers().get(i).getListeProduits().size(); j++) {
-							if(m.getListeUsers().get(i).getListeProduits().get(j).getReference().equals(refProduit)) {
-								int qte=m.getListeUsers().get(i).getListeProduits().get(j).getQuantite();
-								m.getListeUsers().get(i).getListeProduits().get(j).setQuantite(qte-1);
-							}
+						dispo=(m.getListeUsers().get(i).getIndexRefProduit().get(refProduit).getQuantite())>0;
+						if(dispo==true) {
+							u.ajouterPanier(m.getListeUsers().get(i).getIndexRefProduit().get(refProduit));
+							m.getListeUsers().get(i).getIndexRefProduit().get(refProduit).QtiteMoins1();
+							System.out.println("Article ajouté au panier avec succès.");
+							return; //pour arreter la méthode
 						}
-						System.out.println("Article ajouté au panier avec succès.");
-						return; //pour arreter la méthode
+						else {
+							System.out.println("Désolé le produit n'est plus disponible");
+							return; //pour arreter la méthode
+						}
 					}
 				}
-			
 		}
+			
+		//}
 		
 		//Si le produit n'a pas été trouvé
 		System.out.println("Désolé ce produit n'existe pas. Veuillez réessayer.");
@@ -527,8 +532,12 @@ public class testMarketplace {
 		}
 		else {
 			Commande commande = new Commande(numCommande, choixLivraison);
-			final Panier panier=u.getPanier();
-			//panier=u.getPanier();
+			//Panier panier=u.getPanier();
+			Panier panier = new Panier();
+			panier.setMontant(u.getPanier().getMontant());
+			for(int i=0; i<u.getPanier().getListeProduits().size(); i++) {
+				panier.addProduit(u.getPanier().getListeProduits().get(i));
+			}
 			commande.setPanier(panier);
 			u.addListeCommandes(commande);
 			u.retirerSolde(u.getPanier().getMontant());
@@ -554,6 +563,7 @@ public class testMarketplace {
 			else {
 				System.out.println("                 Mode de livraison : Livraison en point relais");
 			}
+			System.out.println("");
 		}
 	}
 	
@@ -732,7 +742,7 @@ public class testMarketplace {
 				
 				case 3 :   
 					acheter(u);
-					//viderPanier(u);
+					viderPanier(u);
 					break;
 					
 				case 4 :

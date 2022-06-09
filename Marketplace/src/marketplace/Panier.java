@@ -63,5 +63,13 @@ public class Panier {
 		}*/
 		montant=0;
 	}
+
+	public void setListeProduits(ArrayList<Produit> listeProduits) {
+		this.listeProduits = listeProduits; 
+	}
+	
+	public void addProduit(Produit p) {
+		listeProduits.add(p);
+	}
 	
 }

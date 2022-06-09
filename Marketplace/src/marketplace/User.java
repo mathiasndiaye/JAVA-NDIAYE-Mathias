@@ -1,6 +1,7 @@
 package marketplace;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class User {
@@ -120,7 +121,7 @@ public abstract class User {
 	public ArrayList<Commande> getListeCommandes() {
 		return null; //We override it in client
 	}
-	
+
 	public void retirerSolde(double m) {
 		solde=solde-m;
 	}

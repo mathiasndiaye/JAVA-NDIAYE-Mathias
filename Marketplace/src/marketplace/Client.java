@@ -1,13 +1,15 @@
 package marketplace;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Client extends User {
 	
 	// Variables de la classe Client
 	private String adresse;
 	private Panier panier;
-	private ArrayList<Commande> listeCommandes;
+	private final ArrayList<Commande> listeCommandes;
 	
 	//Constructeur de la classe Client
 	public Client(String login, String password, String tel, String nom, String prenom, String adresse){
